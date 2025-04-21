@@ -9,11 +9,11 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public function create(){
-        return view('user_create', [
-            'kelas' => Kelas::all(),
-        ]);
-    }
+    // public function create(){
+    //     return view('create_user', [
+    //         'kelas' => Kelas::all(),
+    //     ]);
+    // }
     // public function store(Request $request){
     //     $data = [
     //         'nama'=>$request->input('nama'),
@@ -22,6 +22,21 @@ class UserController extends Controller
     //     ];
     //     return view('profile', $data);
     // }
+
+    public function create()
+    {
+        $kelasModel = new Kelas();
+
+        $kelas = $kelasModel->getKelas();
+
+        $data = [
+            'title' => 'Create User',
+            'kelas' => $kelas,
+        ];
+
+        return view('user_create', $data);
+    }
+    
     public function store(Request $request){
         $validateData = $request->validate([
             'nama' => 'required|string|max:255',
@@ -29,14 +44,35 @@ class UserController extends Controller
             'kelas_id' => 'required|exists:kelas,id',
         ]);
 
-        $user = UserModel::create($validateData);
+        $this->userModel->create($validateData);
 
-        $user->load('kelas');
+        return redirect()->to('/user');
 
-        return view ('profile', [
-            'nama' => $user->nama,
-            'npm' => $user->npm,
-            'nama_kelas' => $user->kelas->nama_kelas ?? 'Kelas tidak ditemukan',
-        ]);
+        // $user = UserModel::create($validateData);
+
+        // $user->load('kelas');
+
+        // return view ('profile', [
+        //     'nama' => $user->nama,
+        //     'npm' => $user->npm,
+        //     'nama_kelas' => $user->kelas->nama_kelas ?? 'Kelas tidak ditemukan',
+        // ]);
     }
+
+    public $userModel;
+    public $kelasModel;
+
+    public function __construct(){
+        $this->userModel = new UserModel();
+        $this->kelasModel = new Kelas();
+    }
+
+    public function index(){
+        $data = [
+            'title' => 'Create User',
+            'users' => $this->userModel->getUser(),
+        ];
+        return view('list_user', $data);
+    }
+
 }

@@ -26,3 +26,5 @@ Route::get('/profile/{nama}/{kelas}/{npm}', [ProfileController::class, 'profile'
 Route::get('/user/create', [UserController::class, 'create'])->name('user_create');
   
 Route::post('/user/store', [UserController::class, 'store'])->name('user.store');
+
+Route::get('/user', [UserController::class, 'index'])->name('user.index');
