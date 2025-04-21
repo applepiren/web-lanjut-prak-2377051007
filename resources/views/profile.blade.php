@@ -3,53 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profil Mahasiswa</title>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        /* Animasi gulir popup */
-        .popup {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-        }
-        .popup.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    </style>
+    <title>Profile</title>
 </head>
-<body class="bg-[#f5f0e6] flex items-center justify-center min-h-screen">
+<body class="flex items-center justify-center min-h-screen bg-gradient-to-r from-blue-200 to-blue-400">
+    <div class="bg-white p-8 rounded-2xl shadow-2xl w-96 text-center">
 
-    <?php
-        $nama = "Fiorentina Amara Putri";
-        $kelas = "D3MI";
-        $npm = "2377051007";
-        $foto = "Foto.jpeg";
-    ?>
-
-    <div id="popupCard" class="popup bg-[#e4d5c7] shadow-2xl rounded-2xl p-8 w-80 text-center">
-        <img class="w-28 h-28 mx-auto rounded-full border-4 border-[#c2b8a3] shadow-md" 
-             src="{{ asset('asset/Foto.jpeg')}}" 
-             alt="Foto Profil">
-        <div class="mt-6 space-y-3">
-            <div class="bg-[#d2c3b3] text-[#4b3e2e] font-semibold py-2 px-4 rounded-full shadow-sm">
-                <?= $nama ?>
-            </div>
-            <div class="bg-[#d2c3b3] text-[#4b3e2e] font-semibold py-2 px-4 rounded-full shadow-sm">
-                <?= $kelas ?>
-            </div>
-            <div class="bg-[#d2c3b3] text-[#4b3e2e] font-semibold py-2 px-4 rounded-full shadow-sm">
-                <?= $npm ?>
-            </div>
+        <div class="flex justify-center mb-5">
+            <img src="/asset/Foto.jpeg" alt="Profile" class="w-60 h-60 rounded-full border-4 border-blue-300 object-cover shadow-md">
+        </div>
+        <div class="space-y-5 text-left px-6 py-4">
+            <div class="bg-blue-100 py-3 px-4 rounded-lg font-semibold text-gray-700 shadow">Nama : {{$nama}}</div>
+            <div class="bg-blue-100 py-3 px-4 rounded-lg font-semibold text-gray-700 shadow">NPM : {{$npm}}</div>
+            <div class="bg-blue-100 py-3 px-4 rounded-lg font-semibold text-gray-700 shadow">Kelas : {{$nama_kelas ?? 'Kelas tidak ditemukan' }}</div>
         </div>
     </div>
-
-    <script>
-        // Tambahkan class "show" setelah halaman dimuat
-        window.onload = () => {
-            document.getElementById('popupCard').classList.add('show');
-        };
-    </script>
-    
 </body>
 </html>
