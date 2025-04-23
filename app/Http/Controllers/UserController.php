@@ -42,11 +42,38 @@ class UserController extends Controller
             'nama' => 'required|string|max:255',
             'npm' => 'required|string|max:255',
             'kelas_id' => 'required|exists:kelas,id',
-        ]);
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ], 
+        [
+            'nama.required' => 'Nama tidak boleh kosong!',
+            'nama.max' => 'Nama tidak boleh lebih dari 255 kata',
+            'npm.required' => 'NPM tidak boleh kosong',
+            'npm.size' => 'NPM harus terdiri dari 10 digit',
+            'foto.image' => 'File harus berupa gambar',
+            'foto.max' => 'Max size foto adalah 2mb',
+        ]
+        );
 
-        $this->userModel->create($validateData);
+        if ($request->hasFile('foto')) {
+            $foto = $request->file('foto');
+            $fotoPath = time() . '_' . $foto->getClientOriginalName();
+            $foto->move(public_path('upload/img'), $fotoPath);
+        } else {
+            $fotoPath = null;
+        }
 
-        return redirect()->to('/user');
+            $this->userModel->create([
+                'nama' => $request->input('nama'),
+                'npm' => $request->input('npm'),
+                'kelas_id' => $request->input('kelas_id'),
+                'foto' => $fotoPath, // Menyimpan path foto
+                ]);
+                return redirect()->to('/user')->with('success', 'User
+                berhasil ditambahkan');
+
+        // $this->userModel->create($validateData);
+
+        // return redirect()->to('/user');
 
         // $user = UserModel::create($validateData);
 
@@ -69,10 +96,21 @@ class UserController extends Controller
 
     public function index(){
         $data = [
-            'title' => 'Create User',
+            'title' => 'List User',
             'users' => $this->userModel->getUser(),
         ];
         return view('list_user', $data);
+    }
+
+    public function show($id){
+        $user = $this->userModel->getUser($id);
+
+        $data = [
+            'title' => 'Profile',
+            'user' => $user
+        ];
+
+        return view('profile', $data);
     }
 
 }
