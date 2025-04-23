@@ -30,7 +30,7 @@ class UserController extends Controller
         $kelas = $kelasModel->getKelas();
 
         $data = [
-            'title' => 'Create User',
+            'title' => 'user create',
             'kelas' => $kelas,
         ];
 
@@ -101,16 +101,61 @@ class UserController extends Controller
         ];
         return view('list_user', $data);
     }
+    //1.show pertama
+    // public function show($id){
+    //     $user = $this->userModel->getUser($id);
+
+    //     $data = [
+    //         'title' => 'Profile',
+    //         'user' => $user
+    //     ];
+
+    //     return view('profile', $data);
+    // }
+
+    public function edit($id)
+    {
+        $user = UserModel::findOrFail($id);
+        $kelasModel = new Kelas();
+        $kelas = $kelasModel->getKelas();
+        $title = 'Edit User';
+        return view('edit_user', compact('user', 'kelas', 'title'));
+    }
+
+    public function update(Request $request, $id){
+        $user = UserModel::findOrFail($id);
+
+        $user->nama = $request->nama;
+        $user->npm = $request->npm;
+        $user->kelas_id = $request->kelas_id;
+
+        if ($request->hasFile('foto')) {
+            $foto = $request->file('foto');
+            $fotoPath = time() . '_' . $foto->getClientOriginalName();
+            $foto->move(public_path('upload/img'), $fotoPath);
+            $user->foto = $fotoPath; // hanya nama file, bukan full path
+        }
+        
+        $user->save();
+
+        return redirect()->route('list.user')->with('success', 'User Berhasil di Update');
+    }
+
+    public function destroy($id){
+        $user = UserModel::findOrFail($id);
+        $user->delete();
+
+        return redirect()->to('/user')->with('success', 'User has been deleted successfully');
+    }
 
     public function show($id){
-        $user = $this->userModel->getUser($id);
+    $user = UserModel::findOrFail($id);
+    $kelas = Kelas::find($user->kelas_id);
+    $user->nama_kelas = $kelas ? $kelas->nama_kelas : null;
 
-        $data = [
-            'title' => 'Profile',
-            'user' => $user
-        ];
+    $title = 'Detail '.$user->nama;
 
-        return view('profile', $data);
+    return view('profile', compact('user', 'kelas', 'title'));
     }
 
 }
