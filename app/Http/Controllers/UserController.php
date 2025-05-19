@@ -57,7 +57,7 @@ class UserController extends Controller
         if ($request->hasFile('foto')) {
             $foto = $request->file('foto');
             $fotoPath = time() . '_' . $foto->getClientOriginalName();
-            $foto->move(public_path('upload/img'), $fotoPath);
+            $foto->storeAs('upload/img', $fotoPath);
         } else {
             $fotoPath = null;
         }
@@ -68,7 +68,7 @@ class UserController extends Controller
                 'kelas_id' => $request->input('kelas_id'),
                 'foto' => $fotoPath, // Menyimpan path foto
                 ]);
-                return redirect()->to('/user')->with('success', 'User
+                 return redirect()->to('/')->with('success', 'User
                 berhasil ditambahkan');
 
         // $this->userModel->create($validateData);
@@ -132,8 +132,8 @@ class UserController extends Controller
         if ($request->hasFile('foto')) {
             $foto = $request->file('foto');
             $fotoPath = time() . '_' . $foto->getClientOriginalName();
-            $foto->move(public_path('upload/img'), $fotoPath);
-            $user->foto = $fotoPath; // hanya nama file, bukan full path
+             $foto->move(public_path('storage/upload/img'), $fotoPath);
+            $user->foto = $fotoPath;
         }
         
         $user->save();

@@ -39,3 +39,5 @@ Route::get('/user', [UserController::class, 'index'])->name('user.list');
 Route::delete('/user/{id}', [UserController::class, 'destroy'])->name('user.destroy');
 
 Route::get('/user/{id}', [UserController::class, 'show'])->name('user.show');
+
+Route::get('/', [UserController::class, 'index'])->name('user.list');

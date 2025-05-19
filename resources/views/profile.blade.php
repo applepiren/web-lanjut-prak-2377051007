@@ -11,7 +11,7 @@
     <div class="bg-white p-8 rounded-2xl shadow-2xl w-96 text-center">
 
         <div class="flex justify-center mb-5">
-                <img src="{{ asset('upload/img/' . $user->foto) }}" alt="Foto {{ $user->nama }}" 
+                 <img src="{{ asset('storage/upload/img/' . $user->foto) }}" alt="Foto {{ $user->nama }}" 
                      class="w-60 h-60 rounded-full border-4 border-blue-300 object-cover shadow-md">
         </div>
 
