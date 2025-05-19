@@ -43,8 +43,8 @@
             <div>
                 <label for="foto" class="block text-lg font-medium text-gray-700">Foto :</label>
                 <input type="file" id="foto" name="foto" class="w-full border border-gray-300 rounded-lg p-2 mt-1 focus:ring-2 focus:ring-blue-400 focus:outline-none shadow-sm">
-                @if($user->foto && file_exists(public_path('upload/img/' . $user->foto)))
-                    <img src="{{ asset('upload/img/' . $user->foto) }}" class="mt-2 w-24 h-24 object-cover rounded-full">
+                @if($user->foto && file_exists(public_path('storage/upload/img/' . $user->foto)))
+                    <img src="{{ asset('storage/upload/img/' . $user->foto) }}" class="mt-2 w-24 h-24 object-cover rounded-full">
                 @endif
             </div>
 

@@ -32,8 +32,8 @@
                             <td class="py-3 px-6">{{ $user->nama }}</td>
                             <td class="py-3 px-6">{{ $user->npm }}</td>
                             <td class="py-3 px-6">
-                                @if($user->foto && file_exists(public_path('upload/img/' . $user->foto)))
-                                    <img src="{{ asset('upload/img/' . $user->foto) }}" alt="Foto {{ $user->nama }}" class="w-16 h-16 object-cover rounded-full shadow">
+                                 @if($user->foto && file_exists(public_path('storage/upload/img/' . $user->foto)))
+                                    <img src="{{ asset('storage/upload/img/' . $user->foto) }}" alt="Foto {{ $user->nama }}" class="w-16 h-16 object-cover rounded-full shadow">
                                 @else
                                     <span class="text-gray-500 italic">Tidak ada foto</span>
                                 @endif
